@@ -1,7 +1,7 @@
 {
   "name": "@fav/prop.enum-own-props",
   "version": "0.0.0",
-  "description": "List enumerable own properties of an object.",
+  "description": "Lists enumerable own properties of an object.",
   "main": "index.js",
   "files": [
     "index.js",
@@ -14,7 +14,7 @@
     "coveralls": "nyc --reporter=text-lcov npm test | coveralls",
     "web:build": "npm run web:build-src && npm run web:build-test",
     "web:build-src": "browserify index.js --standalone fav.prop.enum-own-props -o web/fav.prop.enum-own-props.js && cd web && uglifyjs fav.prop.enum-own-props.js --compress --mangle -o fav.prop.enum-own-props.min.js --source-map url=fav.prop.enum-own-props.min.js.map",
-    "web:build-test": "browserify test/*.test.js -o test/web/browser-test.js",
+    "web:build-test": "node tool/mktest.js",
     "chrome:install": "npm i --no-save mocha-chrome",
     "chrome:test": "mocha-chrome test/web/browser-test.html",
     "phantom:install": "npm i --no-save phantomjs-prebuilt mocha-phantomjs",
@@ -42,10 +42,10 @@
   "homepage": "https://github.com/sttk/fav-prop.enum-own-props#readme",
   "devDependencies": {
     "browserify": "^14.5.0",
-    "chai": "^4.1.2",
+    "chai": "^3.5.0",
     "coveralls": "^3.0.0",
     "eslint": "^4.11.0",
-    "mocha": "^4.0.1",
+    "mocha": "^3.4.2",
     "nyc": "^11.3.0",
     "uglify-js": "^3.1.9"
   }

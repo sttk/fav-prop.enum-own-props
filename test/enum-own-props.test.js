@@ -11,7 +11,7 @@ describe('fav.prop.enumOwnProps', function() {
 
   it('Should get all props when the argument is a plain object', function() {
     expect(enumOwnProps({})).to.deep.equal([]);
-    expect(enumOwnProps({ a: 1, b: true, c: 'C' })).to.deep
+    expect(enumOwnProps({ a: 1, b: true, c: 'C' }).sort()).to.deep
       .equal(['a', 'b', 'c']);
   });
 
@@ -25,7 +25,7 @@ describe('fav.prop.enumOwnProps', function() {
     }
     Fn1.prototype = new Fn0();
     Fn1.prototype.d = 'D';
-    expect(enumOwnProps(new Fn1())).to.deep.equal(['b', 'c']);
+    expect(enumOwnProps(new Fn1()).sort()).to.deep.equal(['b', 'c']);
   });
 
   it('Should get only enumerable props', function() {
@@ -51,20 +51,37 @@ describe('fav.prop.enumOwnProps', function() {
     expect(enumOwnProps(123)).to.deep.equal([]);
   });
 
-  it('Should return an array of index strings when the argument is a string',
+  it('Should return an empty array when the argument is a string',
   function() {
     expect(enumOwnProps('')).to.deep.equal([]);
-    expect(enumOwnProps('abc')).to.deep.equal(['0', '1', '2']);
+    expect(enumOwnProps('abc')).to.deep.equal([]);
+
+    var s = 'abc';
+    try {
+      s.aaa = 'AAA';
+    } catch (e) {
+      // Throw TypeError on Node.js version 0.11 or later.
+    }
+    expect(enumOwnProps(s)).to.deep.equal([]);
   });
 
-  it('Should return an array of index strings when the argument is a string',
+  it('Should return an array of index strings when the argument is a String' +
+  '\n\tobject', function() {
+    var s = new String('abc');
+    expect(enumOwnProps(s).sort()).to.deep.equal(['0', '1', '2']);
+
+    s.aaa = 'AAA';
+    expect(enumOwnProps(s).sort()).to.deep.equal(['0', '1', '2', 'aaa']);
+  });
+
+  it('Should return an array of index strings when the argument is a array',
   function() {
     expect(enumOwnProps([])).to.deep.equal([]);
-    expect(enumOwnProps([1, 2, 3])).to.deep.equal(['0', '1', '2']);
+    expect(enumOwnProps([1, 2, 3]).sort()).to.deep.equal(['0', '1', '2']);
 
     var a = ['a', 'b'];
     a.aaa = 'AAA';
-    expect(enumOwnProps(a)).to.deep.equal(['0', '1', 'aaa']);
+    expect(enumOwnProps(a).sort()).to.deep.equal(['0', '1', 'aaa']);
   });
 
 });

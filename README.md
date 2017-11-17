@@ -1,6 +1,6 @@
 # [@fav/prop.enum-own-props][repo-url] [![NPM][npm-img]][npm-url] [![MIT License][mit-img]][mit-url] [![Build Status][travis-img]][travis-url] [![Build Status][appveyor-img]][appveyor-url] [![Coverage status][coverage-img]][coverage-url]
 
-List enumerable own properties of an object.
+Lists enumerable own properties of an object.
 
 > "fav" is an abbreviation of "favorite" and also the acronym of "for all versions".
 > This package is intended to support all Node.js versions and many browsers as possible.
@@ -23,7 +23,7 @@ $ npm install --save @fav/prop.enum-own-props
 For Node.js:
 
 ```js
-var enumOwnProps = require('@fav/type.is-array');
+var enumOwnProps = require('@fav/prop.enum-own-props');
 enumOwnProps({ a: 1, b: true, c: 'C' }); // => ['a', 'b', 'c' ]
 
 function Fn() { this.a = 1; }
@@ -36,9 +36,9 @@ enumOwnProps(fn); // => ['a']
 For Web browsers:
 
 ```html
-<script src="fav.prop.enum-own=props.min.js"></script>
+<script src="fav.prop.enum-own-props.min.js"></script>
 <script>
-var enumOwnProps = require('@fav/type.is-array');
+var enumOwnProps = fav.prop.enumOwnProps;
 enumOwnProps({ a: 1, b: true, c: 'C' }); // => ['a', 'b', 'c' ]
 </script>
 ```
@@ -50,7 +50,10 @@ enumOwnProps({ a: 1, b: true, c: 'C' }); // => ['a', 'b', 'c' ]
 
 List own enumerable properties of the given object.
 
-This function returns the same result of `Object.keys(obj)`, but does not throw an error and returns an empty array if *obj* is nullish.
+This function returns the same result of `Object.keys(obj)`, but returns an empty array if *obj* is nullish or is not an object.
+
+***NOTE:*** *The behavior of `Object.keys` is different between before and after of Node.js v0.12 when the argument is not an object.*
+
 
 #### Parameter:
 
