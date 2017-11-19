@@ -61,7 +61,15 @@ describe('fav.prop.enumOwnProps', function() {
       s.aaa = 'AAA';
     } catch (e) {
       // Throw TypeError on Node.js version 0.11 or later.
-      console.error('\t', e.message);
+      //console.error('\t', e.message);
+    }
+    expect(enumOwnProps(s)).to.deep.equal(['0', '1', '2']);
+
+    try {
+      Object.defineProperty(s, 'bbb', { value: 'BBB' });
+    } catch (e) {
+      // Throw TypeError on Node.js version 0.11 or later.
+      //console.error('\t', e.message);
     }
     expect(enumOwnProps(s)).to.deep.equal(['0', '1', '2']);
   });
@@ -73,6 +81,10 @@ describe('fav.prop.enumOwnProps', function() {
 
     s.aaa = 'AAA';
     expect(enumOwnProps(s).sort()).to.deep.equal(['0', '1', '2', 'aaa']);
+
+    Object.defineProperty(s, 'bbb', { value: 'BBB' });
+    expect(enumOwnProps(s).sort()).to.deep
+      .equal(['0', '1', '2', 'aaa']);
   });
 
   it('Should return an array of index strings when the argument is a array',
@@ -83,6 +95,10 @@ describe('fav.prop.enumOwnProps', function() {
     var a = ['a', 'b'];
     a.aaa = 'AAA';
     expect(enumOwnProps(a).sort()).to.deep.equal(['0', '1', 'aaa']);
+
+    Object.defineProperty(a, 'bbb', { value: 'BBB' });
+    expect(enumOwnProps(a).sort()).to.deep
+      .equal(['0', '1', 'aaa']);
   });
 
   it('Should return appended properties when the argument is a function',
@@ -92,6 +108,9 @@ describe('fav.prop.enumOwnProps', function() {
 
     fn.aaa = 'AAA';
     expect(enumOwnProps(fn)).to.deep.equal(['aaa']);
+
+    Object.defineProperty(fn, 'bbb', { value: 'BBB' });
+    expect(enumOwnProps(fn).sort()).to.deep.equal(['aaa']);
   });
 
   it('Should return an empty string when the argument is a symbol',
@@ -107,7 +126,14 @@ describe('fav.prop.enumOwnProps', function() {
     try {
       symbol.aaa = 'AAA';
     } catch (e) {
-      console.error('\t', e.message);
+      //console.error('\t', e.message);
+    }
+    expect(enumOwnProps(symbol)).to.deep.equal([]);
+
+    try {
+      Object.defineProperty(symbol, 'bbb', { value: 'BBB' });
+    } catch (e) {
+      //console.error('\t', e.message);
     }
     expect(enumOwnProps(symbol)).to.deep.equal([]);
   });
