@@ -52,18 +52,19 @@ describe('fav.prop.enumOwnProps', function() {
     expect(enumOwnProps(123)).to.deep.equal([]);
   });
 
-  it('Should return an empty array when the argument is a string',
-  function() {
+  it('Should return an array having index strings when the argument is a ' +
+  'string', function() {
     expect(enumOwnProps('')).to.deep.equal([]);
-    expect(enumOwnProps('abc')).to.deep.equal([]);
+    expect(enumOwnProps('abc')).to.deep.equal(['0', '1', '2']);
 
     var s = 'abc';
     try {
       s.aaa = 'AAA';
     } catch (e) {
       // Throw TypeError on Node.js version 0.11 or later.
+      console.error('\t', e.message);
     }
-    expect(enumOwnProps(s)).to.deep.equal([]);
+    expect(enumOwnProps(s)).to.deep.equal(['0', '1', '2']);
   });
 
   it('Should return an array of index strings when the argument is a String' +
@@ -85,6 +86,32 @@ describe('fav.prop.enumOwnProps', function() {
     expect(enumOwnProps(a).sort()).to.deep.equal(['0', '1', 'aaa']);
   });
 
+  it('Should return appended properties when the argument is a function',
+  function() {
+    var fn = function() {};
+    expect(enumOwnProps(fn)).to.deep.equal([]);
+
+    fn.aaa = 'AAA';
+    expect(enumOwnProps(fn)).to.deep.equal(['aaa']);
+  });
+
+  it('Should return an empty string when the argument is a symbol',
+  function() {
+    if (typeof Symbol !== 'function') {
+      this.skip();
+      return;
+    }
+
+    var symbol = Symbol('foo');
+    expect(enumOwnProps(symbol)).to.deep.equal([]);
+
+    try {
+      symbol.aaa = 'AAA';
+    } catch (e) {
+      console.error('\t', e.message);
+    }
+    expect(enumOwnProps(symbol)).to.deep.equal([]);
+  });
 });
 
 })();
