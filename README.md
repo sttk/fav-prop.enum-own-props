@@ -50,7 +50,7 @@ enumOwnProps({ a: 1, b: true, c: 'C' }); // => ['a', 'b', 'c' ]
 
 List own enumerable properties of the given object.
 
-This function returns the same result of `Object.keys(obj)`, but returns an empty array if *obj* is nullish or is not an object.
+This function returns the same result of `Object.keys(obj)`, but returns an empty array if *obj* is nullish.
 
 ***NOTE:*** *The behavior of `Object.keys` is different between before and after of Node.js v0.12 when the argument is not an object.*
 
@@ -111,7 +111,7 @@ This program is free software under [MIT][mit-url] License.
 See the file LICENSE in this distribution for more details.
 
 [repo-url]: https://github.com/sttk/fav-prop.enum-own-props/
-[npm-img]: https://img.shields.io/badge/npm-v0.1.0-blue.svg
+[npm-img]: https://img.shields.io/badge/npm-v0.2.0-blue.svg
 [npm-url]: https://www.npmjs.com/package/@fav/prop.enum-own-props
 [mit-img]: https://img.shields.io/badge/license-MIT-green.svg
 [mit-url]: https://opensource.org/licenses/MIT
