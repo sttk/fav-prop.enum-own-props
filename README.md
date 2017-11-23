@@ -57,9 +57,9 @@ This function returns the same result of `Object.keys(obj)`, but returns an empt
 
 #### Parameter:
 
-| Parameter |  Type  | Description                           |
-|-----------|:------:|---------------------------------------|
-| *obj*     | object | The object to be list its properties. |
+| Parameter |  Type  | Description                             |
+|-----------|:------:|-----------------------------------------|
+| *obj*     | object | The object to be listed its properties. |
 
 #### Return:
 
