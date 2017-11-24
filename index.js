@@ -1,22 +1,26 @@
 'use strict';
 
-function enumOwnProps(obj) {
-  switch (typeof obj) {
-    case 'object': {
-      return Object.keys(obj || {});
-    }
-    case 'function': {
-      return Object.keys(obj);
-    }
+var enumOwnKeys = require('@fav/prop.enum-own-keys');
 
-    // Cause TypeError on Node.js v0.12 or earlier.
-    case 'string': {
-      return Object.keys(new String(obj));
+function enumOwnProps(obj) {
+  var arr, i, n;
+
+  /* istanbul ignore if */
+  if (!Object.entries) {
+    arr = enumOwnKeys(obj);
+    for (i = 0, n = arr.length; i < n; i++) {
+      var elm = arr[i];
+      arr[i] = { key: elm, value: obj[elm] };
     }
-    default: {
-      return [];
-    }
+    return arr;
   }
+
+  arr = Object.entries(obj || {});
+  for (i = 0, n = arr.length; i < n; i++) {
+    var entry = arr[i];
+    arr[i] = { key: entry[0], value: entry[1] };
+  }
+  return arr;
 }
 
 module.exports = enumOwnProps;

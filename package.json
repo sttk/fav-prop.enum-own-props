@@ -48,5 +48,8 @@
     "mocha": "^3.4.2",
     "nyc": "^11.3.0",
     "uglify-js": "^3.1.9"
+  },
+  "dependencies": {
+    "@fav/prop.enum-own-keys": "^0.1.0"
   }
 }
