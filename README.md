@@ -1,6 +1,6 @@
 # [@fav/prop.enum-own-props][repo-url] [![NPM][npm-img]][npm-url] [![MIT License][mit-img]][mit-url] [![Build Status][travis-img]][travis-url] [![Build Status][appveyor-img]][appveyor-url] [![Coverage status][coverage-img]][coverage-url]
 
-Lists enumerable own property content objects of an object.
+Lists enumerable own property keys and symbols of an object.
 
 > "fav" is an abbreviation of "favorite" and also the acronym of "for all versions".
 > This package is intended to support all Node.js versions and many browsers as possible.
@@ -24,13 +24,22 @@ For Node.js:
 
 ```js
 var enumOwnProps = require('@fav/prop.enum-own-props');
-enumOwnProps({ a: 1, b: true, c: 'C' }); // => [{ key: 'a' value: 1 }, { key: 'b', value: true }, { key: 'c', value: 'C' }]
+
+var symbol0 = Symbol('foo');
+var symbol1 = Symbol('bar');
+
+var obj = { a: 1 };
+obj[symbol0] = 2;
+Object.defineProperty(obj, 'b', { value: 3 });
+Object.defineProperty(obj, symbol1, { value: 4 });
+
+enumOwnProps(obj); // => ['a', Symbol(foo)]
 
 function Fn() { this.a = 1; }
 Fn.prototype.b = true;
+Fn.prototype[symbol0] = false;
 var fn = new Fn();
-Object.defineProperty(fn, 'c', { value: 'C' });
-enumOwnProps(fn); // => [{ key: 'a', value: 1 }]
+enumOwnProps(fn); // => ['a']
 ```
 
 For Web browsers:
@@ -39,7 +48,16 @@ For Web browsers:
 <script src="fav.prop.enum-own-props.min.js"></script>
 <script>
 var enumOwnProps = fav.prop.enumOwnProps;
-enumOwnProps({ a: 1, b: true, c: 'C' }); // => [{ key: 'a', value: 1 }, { key: 'b', value: true }, { key: 'c', value: 'C' }]
+
+var symbol0 = Symbol('foo');
+var symbol1 = Symbol('bar');
+
+var obj = { a: 1 };
+obj[symbol0] = 2;
+Object.defineProperty(obj, 'b', { value: 3 });
+Object.defineProperty(obj, symbol1, { value: 4 });
+
+enumOwnProps(obj); // => ['a', Symbol(foo)]
 </script>
 ```
 
@@ -48,19 +66,19 @@ enumOwnProps({ a: 1, b: true, c: 'C' }); // => [{ key: 'a', value: 1 }, { key: '
 
 ### <u>enumOwnProps(obj) : Array</u>
 
-Lists enumerable own property content objects of the given object.
+Lists enumerable own property keys and symbols of the given object.
 
-A property content object is a plain object having `key` and `value` properties, and the values of `key` and `value` are same with the first and second elements of each entry of `Object.entries(obj)`'s result array. 
+This funciton returns an empty array when the argument is nullish.
 
 #### Parameter:
 
-| Parameter |  Type  | Description                             |
-|-----------|:------:|-----------------------------------------|
-| *obj*     | object | The object to be listed its properties. |
+| Parameter |  Type  | Description                                            |
+|-----------|:------:|--------------------------------------------------------|
+| *obj*     | object | The object to be listed its property keys and symbols. |
 
 #### Return:
 
-An array of property content objects.
+An array of property keys and symbols.
 
 **Type:** Array
 

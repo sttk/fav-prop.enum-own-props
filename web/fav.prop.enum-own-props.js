@@ -2,31 +2,16 @@
 'use strict';
 
 var enumOwnKeys = require('@fav/prop.enum-own-keys');
+var enumOwnSymbols = require('@fav/prop.enum-own-symbols');
 
 function enumOwnProps(obj) {
-  var arr, i, n;
-
-  /* istanbul ignore if */
-  if (!Object.entries) {
-    arr = enumOwnKeys(obj);
-    for (i = 0, n = arr.length; i < n; i++) {
-      var elm = arr[i];
-      arr[i] = { key: elm, value: obj[elm] };
-    }
-    return arr;
-  }
-
-  arr = Object.entries(obj || {});
-  for (i = 0, n = arr.length; i < n; i++) {
-    var entry = arr[i];
-    arr[i] = { key: entry[0], value: entry[1] };
-  }
-  return arr;
+  var props = enumOwnKeys(obj);
+  return props.concat(enumOwnSymbols(obj));
 }
 
 module.exports = enumOwnProps;
 
-},{"@fav/prop.enum-own-keys":2}],2:[function(require,module,exports){
+},{"@fav/prop.enum-own-keys":2,"@fav/prop.enum-own-symbols":3}],2:[function(require,module,exports){
 'use strict';
 
 function enumOwnKeys(obj) {
@@ -49,6 +34,40 @@ function enumOwnKeys(obj) {
 }
 
 module.exports = enumOwnKeys;
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+function enumOwnSymbols(obj) {
+  /* istanbul ignore if */
+  if (typeof Symbol !== 'function') {
+    return [];
+  }
+
+  switch (typeof obj) {
+    case 'object': {
+      obj = obj || {};
+      break;
+    }
+    case 'function': {
+      break;
+    }
+    default: {
+      return [];
+    }
+  }
+
+  var symbols = Object.getOwnPropertySymbols(obj);
+  for (var i = symbols.length - 1; i >= 0; i--) {
+    var descriptor = Object.getOwnPropertyDescriptor(obj, symbols[i]);
+    if (!descriptor.enumerable) {
+      symbols.splice(i, 1);
+    }
+  }
+  return symbols;
+}
+
+module.exports = enumOwnSymbols;
 
 },{}]},{},[1])(1)
 });
