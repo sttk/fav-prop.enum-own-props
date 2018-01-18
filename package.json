@@ -50,7 +50,7 @@
     "uglify-js": "^3.1.9"
   },
   "dependencies": {
-    "@fav/prop.enum-own-keys": "^0.1.0",
-    "@fav/prop.enum-own-symbols": "^0.1.0"
+    "@fav/prop.enum-own-keys": "^1.0.0",
+    "@fav/prop.enum-own-symbols": "^1.0.0"
   }
 }
