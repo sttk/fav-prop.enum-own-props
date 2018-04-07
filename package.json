@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/sttk/fav-prop.enum-own-props#readme",
   "devDependencies": {
-    "browserify": "^14.5.0",
+    "browserify": "^16.1.1",
     "chai": "^3.5.0",
     "coveralls": "^3.0.0",
     "eslint": "^4.11.0",
@@ -50,7 +50,7 @@
     "uglify-js": "^3.1.9"
   },
   "dependencies": {
-    "@fav/prop.enum-own-keys": "^1.0.0",
-    "@fav/prop.enum-own-symbols": "^1.0.0"
+    "@fav/prop.enum-own-keys": "^1.0.1",
+    "@fav/prop.enum-own-symbols": "^1.0.1"
   }
 }
